@@ -14,7 +14,6 @@ function App() {
     nextPieces,
     gameState,
     scoreData,
-    handleAction,
     startGame,
     togglePause,
   } = useGameState()
