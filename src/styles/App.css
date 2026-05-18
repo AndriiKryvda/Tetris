@@ -1,0 +1,93 @@
+/* App Root */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a1a;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  user-select: none;
+}
+
+/* Game Container */
+.game-container {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* Left Panel */
+.left-panel {
+  min-width: 160px;
+}
+
+/* Center Panel */
+.center-panel {
+  position: relative;
+}
+
+/* Right Panel */
+.right-panel {
+  min-width: 160px;
+}
+
+/* Controls Help Bar */
+.controls-help {
+  margin-top: 24px;
+  display: flex;
+  gap: 32px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.controls-help__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls-help__key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.controls-help__label {
+  font-size: 13px;
+  color: #a0a0b0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-panel,
+  .right-panel {
+    min-width: unset;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .controls-help {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+}
