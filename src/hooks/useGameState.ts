@@ -456,11 +456,12 @@ export function useGameState(): UseGameStateReturn {
     setClearingLines([]);
     resetPieceBag();
 
-    // Generate initial next pieces
+    // Generate initial next pieces (3 pieces for preview)
     const initialNextPieces = generateNextPieces();
 
-    // Spawn first piece
-    const firstPieceType = initialNextPieces[0].type;
+    // Spawn first piece from a fresh random selection (not from the next pieces queue)
+    fillPieceBag();
+    const firstPieceType = pieceBag.pop()!;
     const size = getTetrominoSize(firstPieceType, 0);
     const x = Math.floor((BOARD_COLS - size.width) / 2);
 
