@@ -92,12 +92,16 @@ export function useGameState(): UseGameStateReturn {
 
   // Generate next pieces using bag system
   const generateNextPieces = useCallback((): NextPieceInfo[] => {
+    // Always start with a fresh bag to ensure fair distribution
+    fillPieceBag();
     const pieces: NextPieceInfo[] = [];
-    while (pieceBag.length < 3) {
-      fillPieceBag();
+    for (let i = 0; i < 3; i++) {
+      if (pieceBag.length === 0) {
+        fillPieceBag();
+      }
       pieces.push({ type: pieceBag.pop()! });
     }
-    return pieces.slice(0, 3);
+    return pieces;
   }, []);
 
   // Calculate ghost piece position
