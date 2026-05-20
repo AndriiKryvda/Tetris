@@ -20,9 +20,12 @@ export function clearLines(board: Board, lines: number[]): Board {
   // Remove the completed lines and add empty lines at the top
   const newBoard = board.filter((_, index) => !lines.includes(index));
 
-  // Add empty lines at the top
+  // Get the column count from the first remaining row (or default to 20)
+  const cols = newBoard.length > 0 && newBoard[0].length > 0 ? newBoard[0].length : 20;
+
+  // Add empty lines at the top with the correct column count
   const emptyRows = Array.from({ length: lines.length }, () =>
-    Array.from({ length: 10 }, () => ({ type: null, filled: false }))
+    Array.from({ length: cols }, () => ({ type: null, filled: false }))
   );
 
   return [...emptyRows, ...newBoard];

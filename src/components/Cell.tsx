@@ -33,8 +33,8 @@ export function Cell({ isFilled, pieceType, isGhost, isClearing, player, isCente
     className += ' game-board__cell--active';
   }
 
-  // Add player indicator class
-  if (player && isFilled && !isGhost) {
+  // Add player indicator class (always when player is set, including for ghost pieces)
+  if (player && isFilled) {
     className += ` game-board__cell--${player}`;
   }
 
