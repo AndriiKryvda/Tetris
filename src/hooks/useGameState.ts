@@ -86,7 +86,7 @@ export function useGameState(): UseGameStateReturn {
   const [clearingLines, setClearingLines] = useState<number[]>([]);
 
   // Game mode state
-  const [gameMode, setGameMode] = useState<GameMode>('single');
+  const [gameMode, setGameMode] = useState<GameMode>('dual');
 
   // Dual player state
   const [dualActivePieces, setDualActivePieces] = useState<{ player1: ActivePiece | null; player2: ActivePiece | null }>({
@@ -610,6 +610,12 @@ export function useGameState(): UseGameStateReturn {
   // Handle keyboard actions
   const handleAction = useCallback(
     (action: KeyboardAction) => {
+      // Handle pause action regardless of game state
+      if (action === 'pause') {
+        togglePause();
+        return;
+      }
+
       if (gameStateRef.current !== 'playing') return;
 
       const currentBoard = boardRef.current;
