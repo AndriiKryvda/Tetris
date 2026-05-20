@@ -21,18 +21,18 @@ export interface KeyboardHandlers {
 
 // Map of key codes to actions
 const KEY_MAP: Record<string, KeyboardAction> = {
-  // Player 1: Arrow keys
-  'ArrowLeft': 'player1-moveLeft',
-  'ArrowRight': 'player1-moveRight',
-  'ArrowUp': 'player1-rotate',
-  'ArrowDown': 'player1-softDrop',
-  'Space': 'player1-hardDrop',
-  // Player 2: WASD + E + Q
-  'KeyA': 'player2-moveLeft',
-  'KeyD': 'player2-moveRight',
-  'KeyE': 'player2-rotate',
-  'KeyX': 'player2-softDrop',
-  'KeyQ': 'player2-hardDrop',
+  // Player 1: WASD keys (left player)
+  'KeyA': 'player1-moveLeft',
+  'KeyD': 'player1-moveRight',
+  'KeyW': 'player1-rotate',
+  'KeyS': 'player1-softDrop',
+  'KeyE': 'player1-hardDrop',
+  // Player 2: Arrow keys (right player)
+  'ArrowLeft': 'player2-moveLeft',
+  'ArrowRight': 'player2-moveRight',
+  'ArrowUp': 'player2-rotate',
+  'ArrowDown': 'player2-softDrop',
+  'Space': 'player2-hardDrop',
   // Pause (shared)
   'KeyP': 'pause',
   'Escape': 'pause',

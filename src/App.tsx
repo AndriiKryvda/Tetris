@@ -88,37 +88,37 @@ function App() {
       {/* Controls Help */}
       <div className="controls-help">
         <div className="controls-help__item">
-          <span className="controls-help__key">← →</span>
+          <span className="controls-help__key">A D</span>
           <span className="controls-help__label">P1 Move</span>
         </div>
         <div className="controls-help__item">
-          <span className="controls-help__key">↑ / W</span>
+          <span className="controls-help__key">W</span>
           <span className="controls-help__label">P1 Rotate</span>
         </div>
         <div className="controls-help__item">
-          <span className="controls-help__key">↓ / S</span>
+          <span className="controls-help__key">S</span>
           <span className="controls-help__label">P1 Drop</span>
         </div>
         <div className="controls-help__item">
-          <span className="controls-help__key">Space</span>
+          <span className="controls-help__key">E</span>
           <span className="controls-help__label">P1 Hard Drop</span>
         </div>
         {gameMode === 'dual' && (
           <>
             <div className="controls-help__item">
-              <span className="controls-help__key">A D</span>
+              <span className="controls-help__key">← →</span>
               <span className="controls-help__label">P2 Move</span>
             </div>
             <div className="controls-help__item">
-              <span className="controls-help__key">E</span>
+              <span className="controls-help__key">↑</span>
               <span className="controls-help__label">P2 Rotate</span>
             </div>
             <div className="controls-help__item">
-              <span className="controls-help__key">X</span>
+              <span className="controls-help__key">↓</span>
               <span className="controls-help__label">P2 Drop</span>
             </div>
             <div className="controls-help__item">
-              <span className="controls-help__key">Q</span>
+              <span className="controls-help__key">Space</span>
               <span className="controls-help__label">P2 Hard Drop</span>
             </div>
           </>
