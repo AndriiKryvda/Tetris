@@ -352,8 +352,15 @@ export function useGameState(): UseGameStateReturn {
     const nextPieceType = currentNextPieces[0].type;
     const size = getTetrominoSize(nextPieceType, 0);
 
-    // Spawn in the center of the shared field
-    const x = Math.floor((BOARD_COLS - size.width) / 2);
+    // Spawn at the correct position based on player (left for player1, right for player2)
+    let x: number;
+    if (playerId === 'player1') {
+      // Player 1 spawns on the left side of the board
+      x = Math.floor((BOARD_COLS / 2 - size.width) / 2) - 3;
+    } else {
+      // Player 2 spawns on the right side of the board
+      x = Math.floor(BOARD_COLS / 2 + (BOARD_COLS - BOARD_COLS / 2 - size.width) / 2) + 3;
+    }
     const y = 0;
 
     const newPiece: ActivePiece = {
@@ -929,8 +936,8 @@ export function useGameState(): UseGameStateReturn {
       fillPieceBag();
       const p1PieceType = pieceBag.pop()!;
       const p1Size = getTetrominoSize(p1PieceType, 0);
-      // Player 1 spawns slightly left of center
-      const p1X = Math.floor((BOARD_COLS / 2 - p1Size.width) / 2);
+      // Player 1 spawns on the left side of the board
+      const p1X = Math.floor((BOARD_COLS / 2 - p1Size.width) / 2) - 3;
 
       const p1Piece: ActivePiece = {
         type: p1PieceType,
@@ -941,8 +948,8 @@ export function useGameState(): UseGameStateReturn {
       fillPieceBag();
       const p2PieceType = pieceBag.pop()!;
       const p2Size = getTetrominoSize(p2PieceType, 0);
-      // Player 2 spawns slightly right of center
-      const p2X = Math.floor(BOARD_COLS / 2 + (BOARD_COLS - BOARD_COLS / 2 - p2Size.width) / 2);
+      // Player 2 spawns on the right side of the board
+      const p2X = Math.floor(BOARD_COLS / 2 + (BOARD_COLS - BOARD_COLS / 2 - p2Size.width) / 2) + 3;
 
       const p2Piece: ActivePiece = {
         type: p2PieceType,
