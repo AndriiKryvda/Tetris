@@ -5,10 +5,16 @@ interface CellProps {
   pieceType?: TetrominoType | null;
   isGhost: boolean;
   isClearing: boolean;
+  player?: 'player1' | 'player2' | null;
+  isCenterDivider?: boolean;
 }
 
-export function Cell({ isFilled, pieceType, isGhost, isClearing }: CellProps) {
+export function Cell({ isFilled, pieceType, isGhost, isClearing, player, isCenterDivider }: CellProps) {
   let className = 'game-board__cell';
+
+  if (isCenterDivider) {
+    className += ' game-board__cell--divider';
+  }
 
   if (isFilled && pieceType) {
     className += ` game-board__cell--${pieceType}`;
@@ -25,6 +31,11 @@ export function Cell({ isFilled, pieceType, isGhost, isClearing }: CellProps) {
 
   if (isFilled && !isGhost) {
     className += ' game-board__cell--active';
+  }
+
+  // Add player indicator class
+  if (player && isFilled && !isGhost) {
+    className += ` game-board__cell--${player}`;
   }
 
   return <div className={className} />;

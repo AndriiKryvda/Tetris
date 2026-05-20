@@ -1,4 +1,4 @@
-import { TetrominoType, ActivePiece } from '../types/tetris';
+import { TetrominoType, ActivePiece, PlayerId } from '../types/tetris';
 
 // Tetromino shapes in their default rotation (rotation 0)
 // Each shape is a 2D array where 1 represents a filled cell
@@ -51,6 +51,18 @@ export const TETROMINO_COLORS: Record<TetrominoType, string> = {
   L: '#f0a000', // Orange
 };
 
+// Player-specific color tints for dual player mode
+export const PLAYER_COLORS: Record<PlayerId, { prefix: string; suffix: string }> = {
+  player1: { prefix: '', suffix: '' },       // No tint for player 1
+  player2: { prefix: '', suffix: '' },       // No tint for player 2 (use patterns instead)
+};
+
+// Pattern indicators for distinguishing players visually
+export const PLAYER_PATTERNS: Record<PlayerId, string> = {
+  player1: '',                               // Solid fill for player 1
+  player2: 'url(#diagonalLines)',            // Hatching pattern for player 2
+};
+
 // Get the shape of a tetromino at a given rotation
 export function getTetrominoShape(type: TetrominoType, rotation: number): number[][] {
   let shape = TETROMINO_SHAPES[type].map((row) => [...row]);
@@ -93,6 +105,27 @@ export function createRandomPiece(): ActivePiece {
   
   const size = getTetrominoSize(type, 0);
   const x = Math.floor((10 - size.width) / 2);
+  const y = 0;
+
+  return { type, position: { x, y }, rotation: 0 };
+}
+
+// Create a new active piece for a specific player with random type
+export function createRandomPieceForPlayer(playerId: PlayerId): ActivePiece {
+  const types: TetrominoType[] = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
+  const type = types[Math.floor(Math.random() * types.length)];
+  
+  const size = getTetrominoSize(type, 0);
+  
+  // Spawn in the player's zone
+  let x: number;
+  if (playerId === 'player1') {
+    // Player 1: left half (columns 0-4)
+    x = Math.floor((5 - size.width) / 2);
+  } else {
+    // Player 2: right half (columns 5-9)
+    x = 5 + Math.floor((5 - size.width) / 2);
+  }
   const y = 0;
 
   return { type, position: { x, y }, rotation: 0 };

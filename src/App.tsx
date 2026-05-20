@@ -14,35 +14,74 @@ function App() {
     nextPieces,
     gameState,
     scoreData,
+    gameMode,
+    player1Active,
+    player2Active,
+    player1GameOver,
+    player2GameOver,
+    dualActivePieces,
+    dualGhostPieces,
+    dualNextPieces,
+    dualScoreData,
     startGame,
     togglePause,
+    setGameMode,
   } = useGameState()
+
+  // Determine the winner for game over screen
+  const winner = (player1GameOver && player2GameOver) ? 
+    (dualScoreData.player1.lines > dualScoreData.player2.lines ? 'player1' : 'player2') : 
+    null;
 
   return (
     <div className="app">
       <div className="game-container">
         {/* Left Panel - Score */}
         <div className="left-panel">
-          <ScorePanel scoreData={scoreData} gameState={gameState} onPause={togglePause} />
+          {gameMode === 'dual' && (
+            <ScorePanel 
+              scoreData={dualScoreData.player1} 
+              gameState={gameState} 
+              onPause={togglePause}
+              playerLabel="Player 1"
+              isActive={player1Active}
+            />
+          )}
+          {gameMode === 'single' && (
+            <ScorePanel scoreData={scoreData} gameState={gameState} onPause={togglePause} />
+          )}
         </div>
 
         {/* Center - Game Board */}
         <div className="center-panel">
           <GameBoard
             board={board}
-            activePiece={activePiece}
-            ghostPiece={ghostPiece}
+            activePiece={gameMode === 'single' ? activePiece : null}
+            ghostPiece={gameMode === 'single' ? ghostPiece : null}
+            dualActivePieces={gameMode === 'dual' ? dualActivePieces : null}
+            dualGhostPieces={gameMode === 'dual' ? dualGhostPieces : null}
+            gameMode={gameMode}
+            player1Active={player1Active}
+            player2Active={player2Active}
           />
           <GameOverlay
             gameState={gameState}
+            gameMode={gameMode}
             onStart={startGame}
             onPause={togglePause}
+            onModeChange={setGameMode}
+            winner={gameMode === 'dual' ? winner : null}
           />
         </div>
 
         {/* Right Panel - Next Piece */}
         <div className="right-panel">
-          <NextPiece nextPieces={nextPieces} />
+          {gameMode === 'dual' && (
+            <NextPiece nextPieces={dualNextPieces.player2} />
+          )}
+          {gameMode === 'single' && (
+            <NextPiece nextPieces={nextPieces} />
+          )}
         </div>
       </div>
 
@@ -50,20 +89,40 @@ function App() {
       <div className="controls-help">
         <div className="controls-help__item">
           <span className="controls-help__key">← →</span>
-          <span className="controls-help__label">Move</span>
+          <span className="controls-help__label">P1 Move</span>
         </div>
         <div className="controls-help__item">
           <span className="controls-help__key">↑ / W</span>
-          <span className="controls-help__label">Rotate</span>
+          <span className="controls-help__label">P1 Rotate</span>
         </div>
         <div className="controls-help__item">
           <span className="controls-help__key">↓ / S</span>
-          <span className="controls-help__label">Soft Drop</span>
+          <span className="controls-help__label">P1 Drop</span>
         </div>
         <div className="controls-help__item">
           <span className="controls-help__key">Space</span>
-          <span className="controls-help__label">Hard Drop</span>
+          <span className="controls-help__label">P1 Hard Drop</span>
         </div>
+        {gameMode === 'dual' && (
+          <>
+            <div className="controls-help__item">
+              <span className="controls-help__key">A D</span>
+              <span className="controls-help__label">P2 Move</span>
+            </div>
+            <div className="controls-help__item">
+              <span className="controls-help__key">E</span>
+              <span className="controls-help__label">P2 Rotate</span>
+            </div>
+            <div className="controls-help__item">
+              <span className="controls-help__key">X</span>
+              <span className="controls-help__label">P2 Drop</span>
+            </div>
+            <div className="controls-help__item">
+              <span className="controls-help__key">Q</span>
+              <span className="controls-help__label">P2 Hard Drop</span>
+            </div>
+          </>
+        )}
         <div className="controls-help__item">
           <span className="controls-help__key">P / Esc</span>
           <span className="controls-help__label">Pause</span>

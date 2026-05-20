@@ -1,8 +1,9 @@
-import { Board, CellState, TetrominoType } from '../types/tetris';
+import { Board, CellState, TetrominoType, PlayerId } from '../types/tetris';
 import { getTetrominoShape } from './pieces';
 
 const BOARD_ROWS = 20;
-const BOARD_COLS = 10;
+// 2x wider board to accommodate shared field for both players
+const BOARD_COLS = 20;
 const EMPTY_CELL: CellState = { type: null, filled: false };
 
 // Create an empty board
@@ -17,7 +18,8 @@ export function isValidPosition(
   board: Board,
   type: TetrominoType,
   position: { x: number; y: number },
-  rotation: number
+  rotation: number,
+  _playerId?: PlayerId
 ): boolean {
   const shape = getTetrominoShape(type, rotation);
   const { height, width } = { height: shape.length, width: shape[0].length };

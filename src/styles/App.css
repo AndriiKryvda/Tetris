@@ -23,6 +23,9 @@
 /* Left Panel */
 .left-panel {
   min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* Center Panel */
@@ -33,6 +36,9 @@
 /* Right Panel */
 .right-panel {
   min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* Controls Help Bar */

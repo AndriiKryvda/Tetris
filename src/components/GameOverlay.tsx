@@ -1,12 +1,15 @@
-import { GameState } from '../types/tetris';
+import { GameState, GameMode } from '../types/tetris';
 
 interface GameOverlayProps {
   gameState: GameState;
+  gameMode: GameMode;
   onStart: () => void;
   onPause: () => void;
+  onModeChange?: (mode: GameMode) => void;
+  winner?: 'player1' | 'player2' | null;
 }
 
-export function GameOverlay({ gameState, onStart, onPause }: GameOverlayProps) {
+export function GameOverlay({ gameState, gameMode, onStart, onPause, onModeChange, winner }: GameOverlayProps) {
   if (gameState === 'playing') {
     return null;
   }
@@ -22,8 +25,30 @@ export function GameOverlay({ gameState, onStart, onPause }: GameOverlayProps) {
           <>
             <div className="game-overlay__title">Tetris</div>
             <div className="game-overlay__subtitle">Classic Block Puzzle</div>
+            
+            {/* Game Mode Selection */}
+            {onModeChange && (
+              <div className="game-overlay__mode-select">
+                <div className="game-overlay__mode-label">Game Mode:</div>
+                <div className="game-overlay__mode-buttons">
+                  <button
+                    className={`game-overlay__mode-button ${gameMode === 'single' ? 'game-overlay__mode-button--active' : ''}`}
+                    onClick={() => onModeChange('single')}
+                  >
+                    Single Player
+                  </button>
+                  <button
+                    className={`game-overlay__mode-button ${gameMode === 'dual' ? 'game-overlay__mode-button--active' : ''}`}
+                    onClick={() => onModeChange('dual')}
+                  >
+                    Dual Player
+                  </button>
+                </div>
+              </div>
+            )}
+            
             <button className="game-overlay__button" onClick={onStart}>
-              Play Game
+              {gameMode === 'dual' ? 'Start Game' : 'Play Game'}
             </button>
           </>
         )}
@@ -42,8 +67,18 @@ export function GameOverlay({ gameState, onStart, onPause }: GameOverlayProps) {
         {isGameOver && (
           <>
             <div className="game-overlay__gameover-icon">\u2620</div>
-            <div className="game-overlay__title">Game Over</div>
-            <div className="game-overlay__score">Score: 0</div>
+            <div className="game-overlay__title">
+              {gameMode === 'dual' && winner ? `${winner === 'player1' ? 'Player 1' : 'Player 2'} Wins!` : 'Game Over'}
+            </div>
+            <div className="game-overlay__score">
+              {gameMode === 'dual' ? (
+                <>
+                  <span>P1: {winner === 'player1' ? 'Winner' : 'Loser'} | P2: {winner === 'player2' ? 'Winner' : 'Loser'}</span>
+                </>
+              ) : (
+                'Score: 0'
+              )}
+            </div>
             <div className="game-overlay__level">Press button to restart</div>
             <button className="game-overlay__button" onClick={onStart}>
               Play Again

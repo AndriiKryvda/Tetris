@@ -4,11 +4,16 @@ interface ScorePanelProps {
   scoreData: ScoreData;
   gameState: GameState;
   onPause: () => void;
+  playerLabel?: string;
+  isActive?: boolean;
 }
 
-export function ScorePanel({ scoreData, gameState, onPause }: ScorePanelProps) {
+export function ScorePanel({ scoreData, gameState, onPause, playerLabel = 'Score', isActive = true }: ScorePanelProps) {
   return (
-    <div className="score-panel">
+    <div className={`score-panel ${!isActive ? 'score-panel--inactive' : ''}`}>
+      {playerLabel && (
+        <div className="score-panel__player-label">{playerLabel}</div>
+      )}
       <div className="score-panel__title">Score</div>
       <div className="score-panel__value">{scoreData.score.toLocaleString()}</div>
 

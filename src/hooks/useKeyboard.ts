@@ -1,12 +1,17 @@
 import { useEffect, useRef } from 'react';
 
-// Keyboard action types
+// Keyboard action types with player identifier
 export type KeyboardAction = 
-  | 'moveLeft'
-  | 'moveRight'
-  | 'rotate'
-  | 'softDrop'
-  | 'hardDrop'
+  | 'player1-moveLeft'
+  | 'player1-moveRight'
+  | 'player1-rotate'
+  | 'player1-softDrop'
+  | 'player1-hardDrop'
+  | 'player2-moveLeft'
+  | 'player2-moveRight'
+  | 'player2-rotate'
+  | 'player2-softDrop'
+  | 'player2-hardDrop'
   | 'pause';
 
 // Keyboard event handlers
@@ -16,15 +21,19 @@ export interface KeyboardHandlers {
 
 // Map of key codes to actions
 const KEY_MAP: Record<string, KeyboardAction> = {
-  'ArrowLeft': 'moveLeft',
-  'KeyA': 'moveLeft',
-  'ArrowRight': 'moveRight',
-  'KeyD': 'moveRight',
-  'ArrowUp': 'rotate',
-  'KeyW': 'rotate',
-  'ArrowDown': 'softDrop',
-  'KeyS': 'softDrop',
-  'Space': 'hardDrop',
+  // Player 1: Arrow keys
+  'ArrowLeft': 'player1-moveLeft',
+  'ArrowRight': 'player1-moveRight',
+  'ArrowUp': 'player1-rotate',
+  'ArrowDown': 'player1-softDrop',
+  'Space': 'player1-hardDrop',
+  // Player 2: WASD + E + Q
+  'KeyA': 'player2-moveLeft',
+  'KeyD': 'player2-moveRight',
+  'KeyE': 'player2-rotate',
+  'KeyX': 'player2-softDrop',
+  'KeyQ': 'player2-hardDrop',
+  // Pause (shared)
   'KeyP': 'pause',
   'Escape': 'pause',
 };

@@ -1,140 +1,118 @@
 /* Game Board */
 .game-board {
   position: relative;
-  width: 320px;
-  height: 640px;
-  background: #1a1a2e;
-  border: 2px solid #4a4a6a;
+  border: 3px solid #4a4a6a;
   border-radius: 8px;
   overflow: hidden;
-  box-sizing: border-box;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.3);
+  background: #1a1a2e;
+  box-shadow: 0 0 30px rgba(100, 100, 255, 0.2);
 }
 
-/* Grid */
+/* Grid - 20 columns for shared field (2x wider) */
 .game-board__grid {
   display: grid;
-  grid-template-columns: repeat(10, 30px);
-  grid-template-rows: repeat(20, 30px);
+  grid-template-columns: repeat(20, 28px);
+  grid-template-rows: repeat(20, 28px);
   gap: 1px;
-  padding: 3px 2px 0;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+  padding: 2px;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 /* Cell */
 .game-board__cell {
-  width: 30px;
-  height: 30px;
-  background: #0f0f1e;
-  border-radius: 2px;
-  transition: background 0.05s ease;
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  background: rgba(30, 30, 50, 0.8);
+  position: relative;
+  transition: background 0.1s ease;
 }
 
-/* Filled Cell */
+/* Filled cell */
 .game-board__cell--filled {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3),
+              inset 0 -2px 0 rgba(0, 0, 0, 0.2),
+              inset 0 2px 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Ghost Cell */
+/* Ghost piece */
 .game-board__cell--ghost {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px dashed rgba(255, 255, 255, 0.3);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* Line Clear Animation */
-@keyframes lineClearFlash {
+/* Clearing animation */
+.game-board__cell--clearing {
+  animation: cellClear 0.3s ease-out;
+  background: white !important;
+}
+
+@keyframes cellClear {
   0% {
-    background: #ffffff;
+    transform: scale(1);
+    opacity: 1;
   }
   50% {
-    background: #ffffff;
+    transform: scale(1.2);
+    opacity: 0.8;
   }
   100% {
-    background: transparent;
+    transform: scale(0);
+    opacity: 0;
   }
 }
 
-.game-board__cell--clearing {
-  animation: lineClearFlash 0.3s ease-out;
+/* Player piece indicators - kept for visual identification in shared field */
+.game-board__cell--player1 {
+  border: 1px solid rgba(100, 150, 255, 0.3);
 }
 
-/* Active Piece */
-.game-board__cell--active {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2), 0 0 4px rgba(255, 255, 255, 0.1);
+.game-board__cell--player2 {
+  border: 1px solid rgba(255, 100, 100, 0.3);
 }
 
-/* Piece Colors */
+/* Tetromino cell colors */
 .game-board__cell--I {
   background: #00f0f0;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 0 6px rgba(0, 240, 240, 0.4);
 }
 
 .game-board__cell--O {
   background: #f0f000;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 0 6px rgba(240, 240, 0, 0.4);
 }
 
 .game-board__cell--T {
   background: #a000f0;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 0 6px rgba(160, 0, 240, 0.4);
 }
 
 .game-board__cell--S {
   background: #00f000;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 0 6px rgba(0, 240, 0, 0.4);
 }
 
 .game-board__cell--Z {
   background: #f00000;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 0 6px rgba(240, 0, 0, 0.4);
 }
 
 .game-board__cell--J {
   background: #0000f0;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 0 6px rgba(0, 0, 240, 0.4);
 }
 
 .game-board__cell--L {
   background: #f0a000;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 0 6px rgba(240, 160, 0, 0.4);
 }
 
-/* Ghost piece color variants */
-.game-board__cell--ghost.game-board__cell--I {
-  background: rgba(0, 240, 240, 0.15);
-  border-color: rgba(0, 240, 240, 0.4);
+/* Pause Button */
+.pause-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 8px 16px;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
 }
 
-.game-board__cell--ghost.game-board__cell--O {
-  background: rgba(240, 240, 0, 0.15);
-  border-color: rgba(240, 240, 0, 0.4);
-}
-
-.game-board__cell--ghost.game-board__cell--T {
-  background: rgba(160, 0, 240, 0.15);
-  border-color: rgba(160, 0, 240, 0.4);
-}
-
-.game-board__cell--ghost.game-board__cell--S {
-  background: rgba(0, 240, 0, 0.15);
-  border-color: rgba(0, 240, 0, 0.4);
-}
-
-.game-board__cell--ghost.game-board__cell--Z {
-  background: rgba(240, 0, 0, 0.15);
-  border-color: rgba(240, 0, 0, 0.4);
-}
-
-.game-board__cell--ghost.game-board__cell--J {
-  background: rgba(0, 0, 240, 0.15);
-  border-color: rgba(0, 0, 240, 0.4);
-}
-
-.game-board__cell--ghost.game-board__cell--L {
-  background: rgba(240, 160, 0, 0.15);
-  border-color: rgba(240, 160, 0, 0.4);
+.pause-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
 }
