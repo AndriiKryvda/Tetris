@@ -6,7 +6,7 @@ interface NextPieceProps {
 }
 
 export function NextPiece({ nextPieces }: NextPieceProps) {
-  const piecesToDisplay = nextPieces.slice(0, 3);
+  const piecesToDisplay = nextPieces && nextPieces.length > 0 ? nextPieces.slice(0, 1) : [];
 
   const renderPieceGrid = (type: TetrominoType) => {
     const shape = getTetrominoShape(type, 0);
@@ -46,11 +46,15 @@ export function NextPiece({ nextPieces }: NextPieceProps) {
     <div className="next-piece-panel">
       <div className="next-piece-panel__title">Next</div>
       <div className="next-piece-panel__grid">
-        {piecesToDisplay.map((pieceInfo, index) => (
-          <div key={index} className="next-piece-panel__item">
-            {renderPieceGrid(pieceInfo.type)}
-          </div>
-        ))}
+        {piecesToDisplay.length > 0 ? (
+          piecesToDisplay.map((pieceInfo, index) => (
+            <div key={index} className="next-piece-panel__item">
+              {renderPieceGrid(pieceInfo.type)}
+            </div>
+          ))
+        ) : (
+          <div className="next-piece-panel__placeholder">Press Start</div>
+        )}
       </div>
     </div>
   );

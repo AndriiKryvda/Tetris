@@ -19,8 +19,8 @@ import { useKeyboard, KeyboardAction } from './useKeyboard';
 import { useGameLoop } from './useGameLoop';
 import { getTetrominoShape } from '../game/pieces';
 
-// Board dimensions - 2x wider for shared field
-const BOARD_ROWS = 20;
+// Board dimensions - 2x wider for shared field, increased height by 5 rows
+const BOARD_ROWS = 25;
 const BOARD_COLS = 20;
 
 // Initial score data

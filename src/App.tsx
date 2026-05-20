@@ -36,16 +36,19 @@ function App() {
   return (
     <div className="app">
       <div className="game-container">
-        {/* Left Panel - Score */}
+        {/* Left Panel - Next Piece and Score for Player 1 */}
         <div className="left-panel">
           {gameMode === 'dual' && (
-            <ScorePanel 
-              scoreData={dualScoreData.player1} 
-              gameState={gameState} 
-              onPause={togglePause}
-              playerLabel="Player 1"
-              isActive={player1Active}
-            />
+            <>
+              <NextPiece nextPieces={dualNextPieces.player1} />
+              <ScorePanel 
+                scoreData={dualScoreData.player1} 
+                gameState={gameState} 
+                onPause={togglePause}
+                playerLabel="Player 1"
+                isActive={player1Active}
+              />
+            </>
           )}
           {gameMode === 'single' && (
             <ScorePanel scoreData={scoreData} gameState={gameState} onPause={togglePause} />
@@ -74,10 +77,19 @@ function App() {
           />
         </div>
 
-        {/* Right Panel - Next Piece */}
+        {/* Right Panel - Next Piece and Score for Player 2 */}
         <div className="right-panel">
           {gameMode === 'dual' && (
-            <NextPiece nextPieces={dualNextPieces.player2} />
+            <>
+              <NextPiece nextPieces={dualNextPieces.player2} />
+              <ScorePanel 
+                scoreData={dualScoreData.player2} 
+                gameState={gameState} 
+                onPause={togglePause}
+                playerLabel="Player 2"
+                isActive={player2Active}
+              />
+            </>
           )}
           {gameMode === 'single' && (
             <NextPiece nextPieces={nextPieces} />

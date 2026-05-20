@@ -1,7 +1,7 @@
 import { Board, CellState, TetrominoType, PlayerId } from '../types/tetris';
 import { getTetrominoShape } from './pieces';
 
-const BOARD_ROWS = 20;
+const BOARD_ROWS = 25;
 // 2x wider board to accommodate shared field for both players
 const BOARD_COLS = 20;
 const EMPTY_CELL: CellState = { type: null, filled: false };

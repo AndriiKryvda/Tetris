@@ -8,11 +8,11 @@
   box-shadow: 0 0 30px rgba(100, 100, 255, 0.2);
 }
 
-/* Grid - 20 columns for shared field (2x wider) */
+/* Grid - 20 columns for shared field (2x wider), 25 rows (increased by 5) */
 .game-board__grid {
   display: grid;
   grid-template-columns: repeat(20, 28px);
-  grid-template-rows: repeat(20, 28px);
+  grid-template-rows: repeat(25, 28px);
   gap: 1px;
   padding: 2px;
   background: rgba(0, 0, 0, 0.3);
