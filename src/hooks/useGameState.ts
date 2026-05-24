@@ -378,8 +378,10 @@ export function useGameState(): UseGameStateReturn {
         if (shape[r][c]) {
           const boardR = y + r;
           const boardC = x + c;
-          if (boardR >= 0 && boardC >= 0 && boardC < BOARD_COLS) {
-            if (boardR < BOARD_ROWS && boardRef.current[boardR]?.[boardC]?.filled) {
+          // Check collision within the player's zone (including cells below row 0)
+          if (boardR >= -10 && boardR < BOARD_ROWS) {
+            const isPlayer1Zone = playerId === 'player1' ? boardC < Math.floor(BOARD_COLS / 2) : boardC >= Math.floor(BOARD_COLS / 2);
+            if (isPlayer1Zone && boardRef.current[boardR]?.[boardC]?.filled) {
               canPlace = false;
             }
           }
@@ -430,6 +432,8 @@ export function useGameState(): UseGameStateReturn {
         setClearingLines(completedLines);
 
         setTimeout(() => {
+          // First update board with the locked piece
+          setBoard(newBoard);
           const clearedBoard = clearLines(boardRef.current, clearingLinesRef.current);
           setBoard(clearedBoard);
           setClearingLines([]);
@@ -504,7 +508,9 @@ export function useGameState(): UseGameStateReturn {
         setClearingLines(completedLines);
 
         setTimeout(() => {
-          const clearedBoard = clearLines(boardRef.current, clearingLinesRef.current);
+          // Apply the locked piece board first, then clear lines from it
+          setBoard(newBoard);
+          const clearedBoard = clearLines(newBoard, clearingLinesRef.current);
           setBoard(clearedBoard);
           setClearingLines([]);
 
@@ -555,6 +561,10 @@ export function useGameState(): UseGameStateReturn {
         }, 300);
       } else {
         setBoard(newBoard);
+        // CRITICAL: Sync boardRef.current to prevent race condition when both
+        // players' pieces reach the bottom in the same game tick.
+        // Without this, the next player's lockDualPiece reads stale board state.
+        boardRef.current = newBoard;
 
         const spawnResult = spawnNewPieceForPlayer(playerId);
         if (spawnResult && spawnResult.canPlace) {
